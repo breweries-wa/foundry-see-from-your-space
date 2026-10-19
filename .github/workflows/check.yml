@@ -1,0 +1,22 @@
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.10.0'
+
+      # Fails on any syntax error in scripts/, which is the point.
+      - run: for f in scripts/*.mjs; do node --check "$f"; done
+
+      - name: Check manifest is valid JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('module.json','utf8'))"

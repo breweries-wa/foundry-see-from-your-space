@@ -1,0 +1,51 @@
+name: Release Creation
+
+on:
+  release:
+    types: [published]
+
+# The release-action step needs write access to upload assets to the release.
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Strip the leading `v` from the tag (e.g. v1.0.0 -> 1.0.0).
+      - name: Extract tag version number
+        id: get_version
+        run: echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+
+      # Stamp the version and point the download at this release's zip.
+      - name: Modify Manifest
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: "module.json"
+        env:
+          version: ${{ steps.get_version.outputs.version }}
+          url: https://github.com/${{ github.repository }}
+          manifest: https://github.com/${{ github.repository }}/releases/latest/download/module.json
+          download: https://github.com/${{ github.repository }}/releases/download/${{ github.event.release.tag_name }}/module.zip
+
+      - name: Create ZIP archive
+        run: zip -r ./module.zip module.json scripts/ LICENSE
+
+      # Attach the manifest and package to the release that triggered this run,
+      # preserving its prerelease flag.
+      - name: Update Release with Files
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          name: ${{ github.event.release.name }}
+          draft: false
+          prerelease: ${{ github.event.release.prerelease }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "./module.json, ./module.zip"
+          tag: ${{ github.event.release.tag_name }}
+          body: ${{ github.event.release.body }}

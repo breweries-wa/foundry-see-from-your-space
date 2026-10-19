@@ -1,0 +1,23 @@
+{
+  "id": "breweries-corner-vision",
+  "title": "Corner Vision",
+  "version": "1.0.0",
+  "description": "Tokens see from every corner of their space, not just the center, so they can peek around corners. A corner on the far side of a wall is pulled back to the wall.",
+  "esmodules": [
+    "scripts/corner-vision.mjs"
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "url": "https://github.com/breweries-wa/foundry-corner-vision",
+  "manifest": "https://github.com/breweries-wa/foundry-corner-vision/releases/latest/download/module.json",
+  "download": "https://github.com/breweries-wa/foundry-corner-vision/releases/latest/download/module.zip",
+  "authors": [
+    {
+      "name": "breweries-wa",
+      "url": "https://github.com/breweries-wa",
+      "flags": {}
+    }
+  ]
+}
