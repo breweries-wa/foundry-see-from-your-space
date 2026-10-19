@@ -1,5 +1,5 @@
 /**
- * Pure geometry helpers for Corner Vision. No Foundry globals besides ClipperLib, so these can be tested outside
+ * Pure geometry helpers for See From Your Space. No Foundry globals besides ClipperLib, so these can be tested outside
  * the client.
  */
 
@@ -60,7 +60,7 @@ export function bridgeHoles(outer, holes) {
     const hole = pending.shift();
     const bridge = findBridge(ring, hole, pending);
     if ( !bridge ) {
-      console.debug("Corner Vision | Could not bridge a vision hole; filling it.");
+      console.debug("See From Your Space | Could not bridge a vision hole; filling it.");
       continue;
     }
     const {oi, hi} = bridge;

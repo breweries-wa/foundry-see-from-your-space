@@ -1,6 +1,6 @@
 import {unionWithKeyholes} from "./geometry.mjs";
 
-const MODULE_ID = "breweries-corner-vision";
+const MODULE_ID = "breweries-see-from-your-space";
 
 /* -------------------------------------------- */
 /*  Settings                                    */
@@ -9,8 +9,8 @@ const MODULE_ID = "breweries-corner-vision";
 function registerSettings() {
   const refresh = () => canvas.ready && canvas.perception.update({initializeVision: true});
   game.settings.register(MODULE_ID, "enabled", {
-    name: "Enable corner vision",
-    hint: "Tokens see from every corner of their space, not just the center.",
+    name: "See from your space",
+    hint: "Tokens see from anywhere in their space, not just the center.",
     scope: "world",
     config: true,
     type: Boolean,
@@ -19,7 +19,7 @@ function registerSettings() {
   });
   game.settings.register(MODULE_ID, "tokens", {
     name: "Apply to",
-    hint: "Which tokens get corner vision.",
+    hint: "Which tokens see from their whole space.",
     scope: "world",
     config: true,
     type: String,
@@ -61,8 +61,8 @@ function registerSettings() {
  * Wrap whatever vision source class is configured, so other modules that replace it still work.
  * @param {typeof foundry.canvas.sources.PointVisionSource} Base
  */
-function makeCornerVisionSource(Base) {
-  return class CornerVisionSource extends Base {
+function makeSpaceVisionSource(Base) {
+  return class SpaceVisionSource extends Base {
 
     /** @inheritDoc */
     _createShapes() {
@@ -209,5 +209,5 @@ function dropCollinear(points) {
 
 Hooks.once("init", () => {
   registerSettings();
-  CONFIG.Canvas.visionSourceClass = makeCornerVisionSource(CONFIG.Canvas.visionSourceClass);
+  CONFIG.Canvas.visionSourceClass = makeSpaceVisionSource(CONFIG.Canvas.visionSourceClass);
 });
