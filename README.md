@@ -22,13 +22,15 @@ by walls, including any wall that runs through the space itself.
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| See from your space | On | Master switch. Changes apply immediately. |
+| See from your space | On | Master switch for the world. Changes apply immediately. |
+| Use on this device | On | Per player, per computer. A player whose vision feels slow can turn it off; their tokens then see from the center only. |
 | Apply to | All tokens | Or only player-owned tokens. |
 | Corner inset | 2% of a grid space | How far corners are pulled in toward the center. |
 | Extra points per side | 0 | Also see from points along each side. Helps with arrow slits; costs performance. |
 
 Each viewpoint is one more vision calculation per token, so a token that sees from its whole space costs about five times
 the core vision work. That's fine for a party; very wall-heavy maps with many sighted tokens may notice it.
+Players on slower computers can switch it off for themselves with **Use on this device**.
 
 ## Install
 

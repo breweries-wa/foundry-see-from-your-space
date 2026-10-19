@@ -17,6 +17,16 @@ function registerSettings() {
     default: true,
     onChange: refresh
   });
+  game.settings.register(MODULE_ID, "thisDevice", {
+    name: "Use on this device",
+    hint: "Turn off if vision feels slow on this computer. Your tokens then see from their center only, "
+      + "as in core Foundry. Only affects your own view.",
+    scope: "client",
+    config: true,
+    type: Boolean,
+    default: true,
+    onChange: refresh
+  });
   game.settings.register(MODULE_ID, "tokens", {
     name: "Apply to",
     hint: "Which tokens see from their whole space.",
@@ -89,7 +99,7 @@ function makeSpaceVisionSource(Base) {
     /* -------------------------------------------- */
 
     #appliesHere() {
-      if ( !game.settings.get(MODULE_ID, "enabled") ) return false;
+      if ( !game.settings.get(MODULE_ID, "enabled") || !game.settings.get(MODULE_ID, "thisDevice") ) return false;
       if ( this.data.disabled || this.suppressed || this.blinded.darkness ) return false;
       if ( !this.data.walls || (this.data.angle < 360) ) return false;
       if ( this.los.points.length < 6 ) return false;
