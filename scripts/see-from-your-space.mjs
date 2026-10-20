@@ -1,6 +1,6 @@
 import {unionWithKeyholes} from "./geometry.mjs";
 
-const MODULE_ID = "breweries-see-from-your-space";
+const MODULE_ID = "see-from-your-space";
 
 /* -------------------------------------------- */
 /*  Settings                                    */
